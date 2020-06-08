@@ -1,34 +1,33 @@
-import pygame
+import pygame as pg
 from pygame.locals import *
-import sys #Importa sistema para usar el cierre de ventana
+import sys
 
-pygame.init()
+BACKGROUND = ((0,240,0))
 
-pantalla = pygame.display.set_mode((600, 400))
-pygame.display.set_caption("Hola Mundo")
+class Game:
+    def __init__(self):# Inicializa los objetos
+        self.pantalla = pg.display.set_mode((800,600))
+        self.pantalla.fill(BACKGROUND)
+        pg.display.set_caption("Pong")
 
-rojo = 0
-direccion = 1
+    def main_loop(self):
+        game_over = False
 
-#hacer que haga el bucle solo 3 veces
-juego_activo = True
-while juego_activo:
-    for event in pygame.event.get():
-        if event.type == QUIT:
-           juego_activo = False
-            
-    if rojo >=255:
-        direccion = -1
-    if rojo <= 0:
-        direccion = 1
+        while not game_over:
+            for event in pg.event.get():
+                if event.type == QUIT:
+                    game_over = True
 
-    rojo += direccion
+            pg.display.flip()
 
-    pantalla.fill((rojo, 0, 0))
+    def quit(self):
+        pg.quit()
+        sys.exit()
 
-    pygame.display.flip()
-    pygame.time.delay( 10 )
+       
 
-
-pygame.quit()
-sys.exit()
+if __name__ == "__main__":
+    pg.init()
+    game = Game()
+    game.main_loop()
+    game.quit()
